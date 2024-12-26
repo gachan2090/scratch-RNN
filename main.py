@@ -17,6 +17,7 @@ validation_data = data[int(m - 0.85 * m):int(m - 0.70 * m)]  # validation data
 testing_data = data[:int(m - 0.85 * m)]  # testing data
 
 #%%
+neurons = 50
 # Activation functions
 def softmax(x):
     return np.exp(x) / np.sum(np.exp(x), axis=0)
@@ -26,18 +27,18 @@ def tanh_derivative(x):
 
 # Initialize weights
 def init_params():
-    Wax = np.random.randn(1, 500)   # weight of input (1 input, 500 neurons)
-    Waa = np.random.randn(500, 500) # weight of hidden layer (500 inputs, 500 neurons)
-    ba = np.random.randn(1, 500)  # bias of hidden layer
-    Wab = np.random.randn(500, 1) # weight of output layer (500 inputs, 1 output)
+    Wax = np.random.randn(1, neurons)   # weight of input (1 input, 500 neurons)
+    Waa = np.random.randn(neurons, neurons) # weight of hidden layer (500 inputs, 500 neurons)
+    ba = np.random.randn(1, neurons)  # bias of hidden layer
+    Wab = np.random.randn(neurons, 1) # weight of output layer (500 inputs, 1 output)
     bb = np.random.randn(1, 1) # bias of output layer
     return Wax, Waa, ba, Wab, bb
 
 # Forward pass through the network
 def forward_pass(Wax, Waa, ba, Wab, bb, x):
     outputs = np.zeros(len(x))
-    hiddens = np.zeros((len(x), 500))
-    prev_hidden = np.zeros((1, 500))  # Initialize prev_hidden with shape (1, 500)
+    hiddens = np.zeros((len(x), neurons))
+    prev_hidden = np.zeros((1, neurons))  # Initialize prev_hidden with shape (1, 500)
 
     for i, temp in enumerate(x):
         x_i = temp.dot(Wax)
@@ -63,7 +64,7 @@ def MSE_grad(actual, predicted):
 
 # Backward pass to update the weights
 def backward_pass(actual, predicted, hiddens, Wax, Waa, ba, Wab, bb):
-    next_hidden = np.zeros((1, 500))  # Initialize next_hidden with correct shape
+    next_hidden = np.zeros((1, neurons))  # Initialize next_hidden with correct shape
     output_weight_grad, output_bias_grad, hidden_weight_grad, hidden_bias_grad, input_weight_grad = [0] * 5
     loss_grad = MSE_grad(actual, predicted)
 
@@ -187,7 +188,7 @@ def predict_future(Wax, Waa, ba, Wab, bb, input_sequence, num_predictions):
 
     return predictions
 
-input_sequence = data[-200:]
+input_sequence = data[-100:]
 # np.random.shuffle(input_sequence)
 num_predictions = 30
 
@@ -215,6 +216,6 @@ plt.yticks(np.arange(10, 40, 5))
 plt.xticks(np.arange(0, np.max(x_idx) + 10, 10))
 plt.xlabel('Time (idx)')
 plt.ylabel('Temperature (°F)')
-plt.title('Temperature Prediction of a Tokyo')
+plt.title('Temperature Prediction of Tokyo')
 plt.legend()
 plt.show()
