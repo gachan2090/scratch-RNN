@@ -1,0 +1,1 @@
+The goal of this Python script is to learn and understand a recurrent neural network, creating one from scratch using only numpy, pandas, and matplotlib. It will have 1 input layer, 1 hidden layer with n neurons, and 1 output layer.
