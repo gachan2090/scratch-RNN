@@ -1,9 +1,12 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import os 
 
 # Data prepreprocessing into array of 1x1 matrices
-data = pd.read_csv(r"temperature.csv")
+parent_dir = os.path.dirname(__file__)
+
+data = pd.read_csv(os.path.join(parent_dir, "temperature.csv"))
 data = data.loc[data['City'] == 'Tokyo']
 data = data['AverageTemperatureFahr'].dropna()
 data = np.array(data)
