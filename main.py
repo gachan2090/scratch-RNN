@@ -94,7 +94,7 @@ def backward_pass(actual, predicted, hiddens, Wax, Waa, ba, Wab, bb):
 
         input_weight_grad += actual[i] * hidden_grad
 
-    learning_rate = 1e-4
+    learning_rate = 1e-5
 
     # Update weights using the gradients
     Wax -= input_weight_grad * learning_rate
@@ -143,7 +143,7 @@ def train_rnn(train_data, num_epochs, batch_size):
 
 # Train the RNN
 np.random.shuffle(train_data)
-Wax, Waa, ba, Wab, bb = train_rnn(train_data, num_epochs = 100, batch_size = 32)
+Wax, Waa, ba, Wab, bb = train_rnn(train_data, num_epochs = 200, batch_size = 32)
 
 
 #%%
